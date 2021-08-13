@@ -48,11 +48,7 @@ public class LabRequestController {
     @GetMapping("/to-be-tested")
     @PreAuthorize("hasAnyRole('TESTER')")
     public List<TestRequest> getForTests() {
-
-
         return testRequestQueryService.findBy(RequestStatus.INITIATED);
-
-
     }
 
     @GetMapping
@@ -70,23 +66,16 @@ public class LabRequestController {
     @PreAuthorize("hasAnyRole('TESTER')")
     @PutMapping("/assign/{id}")
     public TestRequest assignForLabTest(@PathVariable Long id) {
-
-
         User tester = userLoggedInService.getLoggedInUser();
-
         return testRequestUpdateService.assignForLabTest(id, tester);
     }
 
     @PreAuthorize("hasAnyRole('TESTER')")
     @PutMapping("/update/{id}")
     public TestRequest updateLabTest(@PathVariable Long id, @RequestBody CreateLabResult createLabResult) {
-
         try {
-
             User tester = userLoggedInService.getLoggedInUser();
             return testRequestUpdateService.updateLabTest(id, createLabResult, tester);
-
-
         } catch (ConstraintViolationException e) {
             throw asConstraintViolation(e);
         } catch (AppException e) {

@@ -30,20 +30,17 @@ public class ConsultationController {
 
     Logger log = LoggerFactory.getLogger(ConsultationController.class);
 
-
     @Autowired
     private TestRequestUpdateService testRequestUpdateService;
 
     @Autowired
     private TestRequestQueryService testRequestQueryService;
 
-
     @Autowired
     TestRequestFlowService testRequestFlowService;
 
     @Autowired
     private UserLoggedInService userLoggedInService;
-
 
     @GetMapping("/in-queue")
     @PreAuthorize("hasAnyRole('DOCTOR')")
@@ -85,7 +82,6 @@ public class ConsultationController {
         try {
             User loggedInUser = userLoggedInService.getLoggedInUser();
             return testRequestUpdateService.updateConsultation(id, testResult, loggedInUser);
-
         } catch (ConstraintViolationException e) {
             throw asConstraintViolation(e);
         } catch (AppException e) {
